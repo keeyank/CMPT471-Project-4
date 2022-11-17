@@ -36,6 +36,9 @@ class TEApp(NetworkApp):
             objects = json.load(f)
 
             pass_by_path_objs = objects["pass_by_paths"]
+            min_lat_objs = objects["min_latency"]
+            max_bw_objs = objects["max_bandwidth"]
+
             for obj in pass_by_path_objs:
                 match_pattern = obj["match_pattern"]
                 pass_by_obj = PassByPathObjective(
@@ -46,7 +49,6 @@ class TEApp(NetworkApp):
                     symmetric=obj["symmetric"])
                 self.add_pass_by_path_obj(pass_by_obj)
 
-            min_lat_objs = objects["min_latency"]
             for obj in min_lat_objs:
                 match_pattern = obj["match_pattern"]
                 min_lat_obj = MinLatencyObjective(
@@ -54,11 +56,10 @@ class TEApp(NetworkApp):
                                                match_pattern["ip_proto"], match_pattern["src_ip"], match_pattern["dst_ip"],
                                                match_pattern["src_port"], match_pattern["dst_port"], match_pattern["in_port"]),
                     src_switch=obj["src_switch"],
-                    dst_switch=["st_switch"],
-                    symmetric=["symmetric"])
+                    dst_switch=obj["st_switch"],
+                    symmetric=obj["symmetric"])
                 self.add_min_latency_obj(min_lat_obj)
 
-            max_bw_objs = objects["max_bandwidth"]
             for obj in max_bw_objs:
                 match_pattern = obj["match_pattern"]
                 max_bw_obj = MaxBandwidthObjective(
@@ -66,8 +67,8 @@ class TEApp(NetworkApp):
                                                match_pattern["ip_proto"], match_pattern["src_ip"], match_pattern["dst_ip"],
                                                match_pattern["src_port"], match_pattern["dst_port"], match_pattern["in_port"]),
                     src_switch=obj["src_switch"],
-                    dst_switch=["st_switch"],
-                    symmetric=["symmetric"])
+                    dst_switch=obj["st_switch"],
+                    symmetric=obj["symmetric"])
                 self.add_max_bandwidth_obj(max_bw_obj)
             pass
 
