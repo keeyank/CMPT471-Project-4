@@ -35,7 +35,7 @@ class TEApp(NetworkApp):
             # TODO: complete
             objects = json.load(f)
 
-            pass_by_path_objs = objects["pass_by_path"]
+            pass_by_path_objs = objects["pass_by_paths"]
             for obj in pass_by_path_objs:
                 match_pattern = obj["match_pattern"]
                 pass_by_obj = PassByPathObjective(
