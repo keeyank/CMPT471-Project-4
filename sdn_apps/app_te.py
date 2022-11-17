@@ -56,7 +56,7 @@ class TEApp(NetworkApp):
                                                match_pattern["ip_proto"], match_pattern["src_ip"], match_pattern["dst_ip"],
                                                match_pattern["src_port"], match_pattern["dst_port"], match_pattern["in_port"]),
                     src_switch=obj["src_switch"],
-                    dst_switch=obj["st_switch"],
+                    dst_switch=obj["dst_switch"],
                     symmetric=obj["symmetric"])
                 self.add_min_latency_obj(min_lat_obj)
 
@@ -67,7 +67,7 @@ class TEApp(NetworkApp):
                                                match_pattern["ip_proto"], match_pattern["src_ip"], match_pattern["dst_ip"],
                                                match_pattern["src_port"], match_pattern["dst_port"], match_pattern["in_port"]),
                     src_switch=obj["src_switch"],
-                    dst_switch=obj["st_switch"],
+                    dst_switch=obj["dst_switch"],
                     symmetric=obj["symmetric"])
                 self.add_max_bandwidth_obj(max_bw_obj)
             pass
