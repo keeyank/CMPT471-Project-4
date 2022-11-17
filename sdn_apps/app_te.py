@@ -41,7 +41,7 @@ class TEApp(NetworkApp):
                 pass_by_obj = PassByPathObjective(
                     match_pattern=MatchPattern(match_pattern["src_mac"], match_pattern["dst_mac"], match_pattern["mac_proto"],
                                                match_pattern["ip_proto"], match_pattern["src_ip"], match_pattern["dst_ip"],
-                                               match_pattern["src_port"], match_pattern["dst_port"], match_pattern["in-port"]),
+                                               match_pattern["src_port"], match_pattern["dst_port"], match_pattern["in_port"]),
                     switches=obj["switches"],
                     symmetric=obj["symmertric"])
                 self.add_pass_by_path_obj(pass_by_obj)
@@ -52,7 +52,7 @@ class TEApp(NetworkApp):
                 min_lat_obj = MinLatencyObjective(
                     match_pattern=MatchPattern(match_pattern["src_mac"], match_pattern["dst_mac"], match_pattern["mac_proto"],
                                                match_pattern["ip_proto"], match_pattern["src_ip"], match_pattern["dst_ip"],
-                                               match_pattern["src_port"], match_pattern["dst_port"], match_pattern["in-port"]),
+                                               match_pattern["src_port"], match_pattern["dst_port"], match_pattern["in_port"]),
                     src_switch=obj["src_switch"],
                     dst_switch=["st_switch"],
                     symmetric=["symmetric"])
@@ -64,7 +64,7 @@ class TEApp(NetworkApp):
                 max_bw_obj = MaxBandwidthObjective(
                     match_pattern=MatchPattern(match_pattern["src_mac"], match_pattern["dst_mac"], match_pattern["mac_proto"],
                                                match_pattern["ip_proto"], match_pattern["src_ip"], match_pattern["dst_ip"],
-                                               match_pattern["src_port"], match_pattern["dst_port"], match_pattern["in-port"]),
+                                               match_pattern["src_port"], match_pattern["dst_port"], match_pattern["in_port"]),
                     src_switch=obj["src_switch"],
                     dst_switch=["st_switch"],
                     symmetric=["symmetric"])
