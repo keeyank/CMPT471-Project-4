@@ -43,7 +43,7 @@ class TEApp(NetworkApp):
                                                match_pattern["ip_proto"], match_pattern["src_ip"], match_pattern["dst_ip"],
                                                match_pattern["src_port"], match_pattern["dst_port"], match_pattern["in_port"]),
                     switches=obj["switches"],
-                    symmetric=obj["symmertric"])
+                    symmetric=obj["symmetric"])
                 self.add_pass_by_path_obj(pass_by_obj)
 
             min_lat_objs = objects["min_latency"]
