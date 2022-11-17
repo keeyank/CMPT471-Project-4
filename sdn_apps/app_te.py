@@ -34,6 +34,7 @@ class TEApp(NetworkApp):
         with open('%s' % self.json_file) as f:
             # TODO: complete
             objects = json.load(f)
+            print(object)
 
             pass_by_path_objs = objects["pass_by_paths"]
             min_lat_objs = objects["min_latency"]
