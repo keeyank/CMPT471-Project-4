@@ -32,7 +32,7 @@ class FirewallApp(NetworkApp):
                     switch_id=rule["switch_id"],
                     match_pattern=MatchPattern(match_pattern["src_mac"], match_pattern["dst_mac"], match_pattern["mac_proto"],
                                                match_pattern["ip_proto"], match_pattern["src_ip"], match_pattern["dst_ip"],
-                                               match_pattern["src_port"], match_pattern["dst_port"], match_pattern["in-port"]),
+                                               match_pattern["src_port"], match_pattern["dst_port"], match_pattern["in_port"]),
                     action=Action(action["action_type"], action["out_port"])))
 
     # Writes the firewall policy to a JSON file
