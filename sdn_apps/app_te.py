@@ -93,7 +93,7 @@ class TEApp(NetworkApp):
     def provision_pass_by_paths(self):
         self.rules = []
         # TODO: complete
-
+        
     # This function translates the objectives in `self.min_latency_obj` to a list of Rules in `self.rules`
     # It should:
     #   call `self.calculate_rules_for_path` as needed
