@@ -93,7 +93,16 @@ class TEApp(NetworkApp):
     def provision_pass_by_paths(self):
         self.rules = []
         # TODO: complete
-        
+        for obj in self.pass_by_paths_obj:
+            path = [str(x) for x in obj.switches]
+            self.rules.extend(self.calculate_rules_for_path(
+                path=path, match_pattern=obj.match_pattern))
+            if (obj.symmetric):
+                path = path.reverse()
+                self.rules.extend(self.calculate_rules_for_path(
+                    path=path, match_pattern=obj.match_pattern))
+        self.send_openflow_rules()
+
     # This function translates the objectives in `self.min_latency_obj` to a list of Rules in `self.rules`
     # It should:
     #   call `self.calculate_rules_for_path` as needed
