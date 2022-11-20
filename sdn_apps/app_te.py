@@ -112,6 +112,16 @@ class TEApp(NetworkApp):
     def provision_min_latency_paths(self):
         self.rules = []
         # TODO: complete
+        for obj in self.min_latency_obj:
+            path = nx.shortest_path(self.topo, obj.src_switch, obj.dst_switch, 'delay')
+            self.rules.extend(self.calculate_rules_for_path(
+                path=path, match_pattern=obj.match_pattern))
+            if (obj.symmetric):
+                path = nx.shortest_path(self.topo, obj.dst_switch, obj.src_switch, 'delay')
+                self.rules.extend(self.calculate_rules_for_path(
+                    path=path, match_pattern=obj.match_pattern))
+        self.send_openflow_rules()
+
 
     # BONUS:
     # This function translates the objectives in `self.max_bandwidth_obj` to a list of Rules in `self.rules`
