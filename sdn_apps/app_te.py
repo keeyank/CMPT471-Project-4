@@ -113,13 +113,19 @@ class TEApp(NetworkApp):
         self.rules = []
         # TODO: complete
         for obj in self.min_latency_obj:
-            path = nx.shortest_path(self.topo, obj.src_switch, obj.dst_switch, 'delay')
+            print('hereS TOP\n\n\n\n')
+            print(self.topo.nodes())
+            print('\n\n')
+            path = nx.shortest_path(self.topo, str(obj.src_switch), 
+                str(obj.dst_switch), weight='delay')
             self.rules.extend(self.calculate_rules_for_path(
                 path=path, match_pattern=obj.match_pattern))
             if (obj.symmetric):
-                path = nx.shortest_path(self.topo, obj.dst_switch, obj.src_switch, 'delay')
+                path = nx.shortest_path(self.topo, str(obj.dst_switch), 
+                    str(obj.src_switch), 'delay')
                 self.rules.extend(self.calculate_rules_for_path(
                     path=path, match_pattern=obj.match_pattern))
+                pass
         self.send_openflow_rules()
 
 
