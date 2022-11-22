@@ -1,4 +1,6 @@
+from email.policy import default
 import json
+from os import stat
 
 import networkx as nx
 
@@ -137,7 +139,51 @@ class TEApp(NetworkApp):
     #   handle traffic in reverse direction when `symmetric` is True
     #   call `self.send_openflow_rules()` at the end
     def provision_max_bandwidth_paths(self):
+        self.rules = []
+        print(self.topo.edges())
+        for edge in self.topo.edges():
+            print (self.topo[1][2])
+            print((self.topo.get_edge_data("1", "2", default = 0))["bw"])
+        for obj in self.min_latency_obj:
+            path = self.max_bandwidth_path(str(obj.src_switch), 
+                str(obj.dst_switch))
+            self.rules.extend(self.calculate_rules_for_path(
+                path=path, match_pattern=obj.match_pattern))
+            if (obj.symmetric):
+                path = self.max_bandwidth_path(str(obj.dst_switch), 
+                    str(obj.src_switch))
+                self.rules.extend(self.calculate_rules_for_path(
+                    path=path, match_pattern=obj.match_pattern))
+                pass
+        self.send_openflow_rules()
         pass
+
+    # def max_bandwidth_path(self, src_switch, dst_switch):
+    #     path = []
+    #     status = {}  # status map
+    #     parent = {}  # store the parent of current switch
+    #     fringe = {} # fringes are stored in a list
+    #     bw = {}  # bandwidth associated with each switch
+
+    #     for v in self.topo.nodes():
+    #         status[v] = 'unseen'
+
+    #     bw[src_switch] = float('inf')
+    #     parent[src_switch] = None
+    #     status[src_switch] = 'intree'
+
+    #     for edge in self.topo.edges():
+    #         if (edge[0] == src_switch):
+    #             v = edge[1]
+    #             parent[v] = src_switch
+    #             status[v] = 'fringe'
+    #             bw[v] = (self.topo.get_edge_data(edge[0], edge[1]))["bw"]
+    #             fringe[v] = bw[v]      
+        
+    #     while (len(fringe)!=0) and (not status[dst_switch] == 'intree'):
+
+    #     return path
+
 
     # BONUS: Used to react to changes in the network (the controller notifies the App)
     def on_notified(self, **kwargs):
