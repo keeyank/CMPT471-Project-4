@@ -1,0 +1,19 @@
+Connecting to host 10.0.0.6, port 5050
+[  4] local 10.0.0.1 port 5050 connected to 10.0.0.6 port 5050
+[ ID] Interval           Transfer     Bandwidth       Total Datagrams
+[  4]   0.00-1.00   sec   117 KBytes   959 Kbits/sec  100  
+[  4]   1.00-2.00   sec   128 KBytes  1.05 Mbits/sec  109  
+[  4]   2.00-3.00   sec   129 KBytes  1.06 Mbits/sec  110  
+[  4]   3.00-4.10   sec   127 KBytes   946 Kbits/sec  108  
+[  4]   4.10-5.03   sec   130 KBytes  1.14 Mbits/sec  111  
+[  4]   5.03-6.04   sec   127 KBytes  1.03 Mbits/sec  108  
+[  4]   6.04-7.01   sec  96.1 KBytes   809 Kbits/sec  82  
+[  4]   7.01-8.04   sec   163 KBytes  1.29 Mbits/sec  139  
+[  4]   8.04-9.00   sec   137 KBytes  1.17 Mbits/sec  117  
+[  4]   9.00-10.00  sec   116 KBytes   950 Kbits/sec  99  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams
+[  4]   0.00-10.00  sec  1.24 MBytes  1.04 Mbits/sec  1.458 ms  0/1082 (0%)  
+[  4] Sent 1082 datagrams
+
+iperf Done.
