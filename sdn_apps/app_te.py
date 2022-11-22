@@ -5,10 +5,10 @@ from os import stat
 import networkx as nx
 
 from app import NetworkApp
-from rule import MatchPattern
+from rule import  Action, ActionType, Rule, MatchPattern
 from te_objs import PassByPathObjective, MinLatencyObjective, MaxBandwidthObjective
 from utils_json import DefaultEncoder
-
+import utils_net as un
 
 class TEApp(NetworkApp):
     def __init__(self, topo_file, json_file, of_controller=None, priority=2):
@@ -114,20 +114,40 @@ class TEApp(NetworkApp):
     def provision_min_latency_paths(self):
         self.rules = []
         # TODO: complete
+
+        for n1 in self.topo.nodes():
+            pattern = MatchPattern(dst_mac=un.mn_get_host_mac(n1))
+            action = Action(action_type=ActionType.FORWARD, out_port=1)
+            rule = Rule(switch_id=int(n1), match_pattern=pattern, action=action)
+            self.add_rule(rule)
+
         for obj in self.min_latency_obj:
-            print('hereS TOP\n\n\n\n')
-            print(self.topo.nodes())
-            print('\n\n')
             path = nx.shortest_path(self.topo, str(obj.src_switch), 
                 str(obj.dst_switch), weight='delay')
-            self.rules.extend(self.calculate_rules_for_path(
-                path=path, match_pattern=obj.match_pattern))
+
+            # print(path)
+
+            obj.match_pattern.src_mac = un.mn_get_host_mac(obj.src_switch)
+            obj.match_pattern.dst_mac = un.mn_get_host_mac(obj.dst_switch)
+
+            # self.rules.extend(self.calculate_rules_for_path(path=path, 
+            #     match_pattern=obj.match_pattern))
+            
+            rules = self.calculate_rules_for_path(path=path, match_pattern=obj.match_pattern)
+            for r in rules:
+                self.add_rule(r)
+
             if (obj.symmetric):
+
+                obj.match_pattern.src_mac = un.mn_get_host_mac(obj.dst_switch)
+                obj.match_pattern.dst_mac = un.mn_get_host_mac(obj.src_switch)
+
                 path = nx.shortest_path(self.topo, str(obj.dst_switch), 
                     str(obj.src_switch), 'delay')
-                self.rules.extend(self.calculate_rules_for_path(
-                    path=path, match_pattern=obj.match_pattern))
-                pass
+                rules = self.calculate_rules_for_path(path=path, match_pattern=obj.match_pattern)
+                for r in rules:
+                    self.add_rule(r)
+
         self.send_openflow_rules()
 
 
@@ -186,5 +206,8 @@ class TEApp(NetworkApp):
 
 
     # BONUS: Used to react to changes in the network (the controller notifies the App)
-    def on_notified(self, **kwargs):
-        pass
+    def on_notified(self, change, n1, n2):
+        if change == 'linkdown':
+            self.topo.remove_edge(n1, n2)
+            self.provision_min_latency_paths()
+        print('network changed')

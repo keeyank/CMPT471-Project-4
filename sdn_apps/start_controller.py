@@ -110,6 +110,11 @@ class ControllerInterface(ControllerBase):
         controller.app_l2.calculate_connectivity_rules()
         return Response(status=200)
 
+    @route('prj', '/l2/linkdown/{n1}-{n2}', methods=['GET', 'POST'])
+    def l2_linkdown(self, req, **kwargs):
+        self.controller.app_l2.on_notified('linkdown', kwargs['n1'], kwargs['n2'])
+        return Response(status=200)
+
     @route('prj', '/te/start', methods=['POST'])
     def te_start(self, req, **kwargs):
         controller = self.controller
@@ -118,6 +123,12 @@ class ControllerInterface(ControllerBase):
         # Returns status code 200
         controller.app_te = TEApp(GRAPH_PATH, input_file, controller)
         controller.app_te.from_json()
+        return Response(status=200)
+
+    @route('prj', '/te/linkdown/{n1}-{n2}', methods=['POST'])
+    def te_linkdown(self, req, **kwargs):
+        controller = self.controller
+        controller.app_te.on_notified('linkdown', kwargs['n1'], kwargs['n2'])
         return Response(status=200)
 
     @route('prj', '/te/provision_pass_by_paths', methods=['GET', 'POST'])
