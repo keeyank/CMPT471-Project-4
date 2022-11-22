@@ -48,4 +48,4 @@ class FirewallApp(NetworkApp):
 
     # BONUS: Used to react to changes in the network (the controller notifies the App)
     def on_notified(self, **kwargs):
-        pass
+        print('network change')
