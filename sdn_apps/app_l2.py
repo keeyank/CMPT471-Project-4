@@ -41,5 +41,10 @@ class L2ConnectivityApp(NetworkApp):
         pass
     
     # BONUS: Used to react to changes in the network (the controller notifies the App)
-    def on_notified(self, **kwargs):
-        pass
+    def on_notified(self, change, n1, n2):
+        if change == 'linkdown':
+            print([e for e in self.topo.edges])
+            self.topo.remove_edge(n1, n2)
+            print([e for e in self.topo.edges])
+            self.calculate_connectivity_rules()
+        print('network changed')
